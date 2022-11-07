@@ -1,0 +1,65 @@
+Here are the outputs that got:
+####################################################################################
+Deployment (output contract address):
+$ yarn run ts-node --files ./scripts/Deployment.ts "Proposal 1" "Proposal 2" "Proposal 3"
+
+0xAE7B5cf05Ebe812449487c4E7eb451054D8d46Fb
+
+####################################################################################
+GiveRightToVote to 3 users (so 4 users can vote including the chairperson who deployed contract):
+$ yarn run ts-node --files ./scripts/GiveRightToVote.ts
+
+0x46a50b43c0147f90df26e9235ec498fe84e8b799dea79f40815fd983a93a832e
+0xd634a9e5756c40e20b05fa6dfa740f18af49c4d93844ece294388ce53cd8c18b
+0xfd02d9a44d8a99bf339dd69966168a3c023453ea447fbfea26d798e53bac61fb
+
+####################################################################################
+Output user info (can see voter3 has not delegated to voter2):
+$ yarn run ts-node --files ./scripts/ReadVoterInfo.ts
+
+voters_chairperson is: 1,false,0,0x0000000000000000000000000000000000000000
+voters1 is: 1,false,0,0x0000000000000000000000000000000000000000
+voters2 is: 1,false,0,0x0000000000000000000000000000000000000000
+voters3 is: 1,false,0,0x0000000000000000000000000000000000000000
+
+####################################################################################
+Delegate:
+$ yarn run ts-node --files ./scripts/Delegate.ts
+
+0xae5e7388066e58ad5fb3e5a2bb89ae79d594305d4d944e521dec282ab85cb7a3
+
+
+####################################################################################
+Output user info (can see voter3 has not delegated to voter2):
+$ yarn run ts-node --files ./scripts/ReadVoterInfo.ts
+
+voters_chairperson is: 1,false,0,0x0000000000000000000000000000000000000000
+voters1 is: 1,false,0,0x0000000000000000000000000000000000000000
+voters2 is: 2,false,0,0x0000000000000000000000000000000000000000
+voters3 is: 1,true,0,0x71A955dBef69d97116CF6C6807876872468787f2
+
+####################################################################################
+Voting (3 people vote, not including voter3 who delegated his voting weight/rights to voter2):
+$ yarn run ts-node --files ./scripts/Voting.ts
+
+0x76123f0f1b4ff2966323c17174f6092fb39aaf4f76232c68e01fdb421430f4cd
+0x7b369ea78fc3dd4f5860b1028538164cdaa93d628cc500dda5f639d149dce9a5
+0x9d8d9a819cfc42c81bc87dd780fc71c53f938d4508acd4405c50836b26ce5997
+
+####################################################################################
+Output user info (can see all voters have voted):
+$ yarn run ts-node --files ./scripts/ReadVoterInfo.ts
+
+voters_chairperson is: 1,true,0,0x0000000000000000000000000000000000000000
+voters1 is: 1,true,1,0x0000000000000000000000000000000000000000
+voters2 is: 2,true,2,0x0000000000000000000000000000000000000000
+voters3 is: 1,true,0,0x71A955dBef69d97116CF6C6807876872468787f2
+
+####################################################################################
+Winner (should be 'Proposal 3' since voter2 voted for it and his vote is worth two since voter3 delegated to him):
+$ yarn run ts-node --files ./scripts/Winners.ts
+
+winningProposal: 2
+winnerName: Proposal 3
+
+####################################################################################
